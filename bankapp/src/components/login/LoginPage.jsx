@@ -56,7 +56,7 @@ const LoginPage = () => {
           {isRegister ? (
             <>
               {" "}
-              <RegisterPage />{" "}
+              <RegisterPage SetisRegister={SetisRegister}/>{" "}
             </>
           ) : (
             <>

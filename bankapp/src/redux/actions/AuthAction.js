@@ -12,7 +12,6 @@ export const register = createAsyncThunk(
 
     } catch (error) {
       alert(error.response?.data?.message)
-      
     }
   }
 );

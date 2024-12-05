@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { addCustomer } from "../../redux/actions/CustomerAction";
 import { register } from "../../redux/actions/AuthAction";
 
-const RegisterPage = () => {
+const RegisterPage = (props) => {
   
   const dispatch = useDispatch();
   const [formData, setFormData] = useState(CustomerModel);
@@ -23,6 +23,7 @@ const RegisterPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
       dispatch(register(formData));
+      props.SetisRegister(false);
   };
 
   return (
@@ -122,6 +123,7 @@ const RegisterPage = () => {
       <button
         type="button"
         className="btn btn-secondary me-2 mt-3"
+      onClick={()=>props.SetisRegister(false)}
       >
         Close
       </button>
