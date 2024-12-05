@@ -1,12 +1,11 @@
-﻿using Azure.Core;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WebApi.DTO;
 using WebApi.Models;
 using WebApi.Services;
 
 namespace WebApi.Repository.Auth
 {
-    public class AuthRepository(BankContext context,AuthServices authServices) : IAuthRepository
+    public class AuthRepository(BankContext context, AuthServices authServices) : IAuthRepository
     {
         private readonly BankContext _context = context;
         private readonly AuthServices _authServices = authServices;
@@ -18,7 +17,7 @@ namespace WebApi.Repository.Auth
 
             if (customerExists)
             {
-                return null; 
+                return null;
             }
 
             _authServices.CreatePasswordHash(customer.Password!, out byte[] passwordHash, out byte[] passwordSalt);
@@ -30,7 +29,8 @@ namespace WebApi.Repository.Auth
                 Email = customer.Email,
                 PhoneNumber = customer.PhoneNumber,
                 AccountCreationDate = DateTime.UtcNow,
-                DateOfBirth=customer.DateOfBirth
+                DateOfBirth = customer.DateOfBirth,
+                Gender=customer.Gender
             };
             await _context.Customers.AddAsync(newCustomer);
             await _context.SaveChangesAsync();
@@ -39,7 +39,7 @@ namespace WebApi.Repository.Auth
             {
                 var newCustomerAddress = new CustomerAddress
                 {
-                    CustomerId = newCustomer.CustomerId, 
+                    CustomerId = newCustomer.CustomerId,
                     Address = customer.CustomerAddress.Address,
                     City = customer.CustomerAddress.City,
                     State = customer.CustomerAddress.State,
@@ -56,7 +56,7 @@ namespace WebApi.Repository.Auth
                 Email = customer.Email!,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                RoleId = 3, 
+                RoleId = 3,
                 CreatedDate = DateTime.UtcNow
             };
             await _context.Users.AddAsync(newUser);
@@ -74,19 +74,19 @@ namespace WebApi.Repository.Auth
 
             if (user == null)
             {
-                return null; 
+                return null;
             }
 
             if (!_authServices.VerifyPasswordHash(password, user.PasswordHash!, user.PasswordSalt!))
             {
-                return null; 
+                return null;
             }
 
             var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Email == email);
 
             if (customer == null)
             {
-                return null; 
+                return null;
             }
 
             string token = _authServices.CreateToken(customer, user, user.Role!);
@@ -94,7 +94,7 @@ namespace WebApi.Repository.Auth
             return new LoginResponseDto
             {
                 Token = token,
-                Role= Role!.RoleName,
+                Role = Role!.RoleName,
                 Customer = customer
             };
         }

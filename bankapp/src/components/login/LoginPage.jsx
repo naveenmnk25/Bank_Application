@@ -15,8 +15,8 @@ const LoginPage = () => {
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
-    username: "john.doe@example.com",
-    password: "SecurePassword123",
+    username: "naveen252000kumar@gmail.com",
+    password: "Naveen@123",
   });
 
   const handleChange = (e) => {

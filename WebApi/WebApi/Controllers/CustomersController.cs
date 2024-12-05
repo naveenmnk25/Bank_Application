@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Xml.Linq;
 using WebApi.Models;
 using WebApi.Repository.Customers;
 
@@ -11,7 +10,6 @@ namespace WebApi.Controllers
     [Authorize(Roles = "Customer")]
     public class CustomerController(ICustomersRepository customersRepository) : Controller
     {
-
         private readonly ICustomersRepository _customersRepository = customersRepository;
 
         // Get All Customers
@@ -69,7 +67,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> DeleteCustomer(int id)
         {
             var isDeleted = await _customersRepository.DeleteCustomer(id);
-            if (isDeleted==0)
+            if (isDeleted == 0)
             {
                 return NotFound();
             }

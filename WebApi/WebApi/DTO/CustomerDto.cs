@@ -1,6 +1,4 @@
-﻿using WebApi.Models;
-
-namespace WebApi.DTO
+﻿namespace WebApi.DTO
 {
     public class CustomerDto
     {
@@ -21,6 +19,5 @@ namespace WebApi.DTO
 
         public bool IsActive { get; set; }
         public CustomerAddressDto? CustomerAddress { get; set; }
-
     }
 }

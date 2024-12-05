@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Xml;
 using WebApi.Models;
 
 namespace WebApi.Repository.Customers
@@ -20,6 +19,7 @@ namespace WebApi.Repository.Customers
                 throw;
             }
         }
+
         public async Task<Customer> GetCustomerById(string mail)
         {
             return await _context.Customers.FirstOrDefaultAsync(c => c.Email == mail);

@@ -1,10 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using WebApi.DTO;
 using WebApi.Models;
 
 namespace WebApi.Services
@@ -56,8 +53,6 @@ namespace WebApi.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-
-
         public bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordsalt)
         {
             using (var hmac = new HMACSHA512(passwordsalt))
@@ -66,6 +61,5 @@ namespace WebApi.Services
                 return computedHash.SequenceEqual(passwordHash);
             }
         }
-
     }
 }
