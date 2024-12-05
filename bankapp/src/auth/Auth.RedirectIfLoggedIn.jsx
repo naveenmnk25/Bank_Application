@@ -6,7 +6,7 @@ const RedirectIfLoggedIn = ({ children }) => {
     const auth = useAuth();
 
     // If the user is already logged in, redirect to the dashboard
-    if (auth.user) {
+    if (auth&& auth.user) {
         return <Navigate to={PathConstants.DASHBOARD} state={{ path: location.pathname }} />;
     }
 
