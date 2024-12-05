@@ -1,9 +1,10 @@
 --- React -----
 1.  npm create vite@latest my-react-app
-2. npm install redux@4.2.1 // npm install react-redux
+2. npm install react-redux
 3. npm install axios
 4. @reduxjs/toolkit
 5. react-router-dom
+6. SCSS
 
 ---- SQL Server---
 create DataBase Bank
