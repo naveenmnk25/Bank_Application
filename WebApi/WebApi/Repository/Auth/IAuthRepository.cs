@@ -6,6 +6,6 @@ namespace WebApi.Repository.Auth
     public interface IAuthRepository
     {
         Task<Customer> Register(CustomerDto customer);
-        Task<LoginResponseDto> Login(string email, string password);
+        Task<LoginResponseDto> Login(string Email, string Password);
     }
 }

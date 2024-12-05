@@ -1,9 +1,10 @@
 
 import { createSlice } from '@reduxjs/toolkit';
-import { addCustomer, deleteCustomer, fetchCustomer, updateCustomer } from '../actions/CustomerAction';
+import { addCustomer, deleteCustomer, fetchCustomer, fetchCustomerByIdEmail, updateCustomer } from '../actions/CustomerAction';
 
 const initialState = {
   customerList: null,
+  customer: null,
   status: 'idle',
   error: null
 };
@@ -26,6 +27,20 @@ const customerSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
         state.customerList=null;
+      })
+
+      .addCase(fetchCustomerByIdEmail.pending, (state) => {
+        state.status = 'loading'; 
+        state.customer=null;
+      })
+      .addCase(fetchCustomerByIdEmail.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.customer = action.payload;
+      })
+      .addCase(fetchCustomerByIdEmail.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+        state.customer=null;
       })
 
       // Add Customer Value

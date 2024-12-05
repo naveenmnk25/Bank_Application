@@ -18,10 +18,6 @@ public partial class Customer
     public string? Email { get; set; }
 
     public string? PhoneNumber { get; set; }
-    public string? Role { get; set; }
-    public byte[]? PasswordHash { get; set; }
-
-    public byte[]? PasswordSalt { get; set; }
 
     public DateTime AccountCreationDate { get; set; }
 
@@ -35,5 +31,9 @@ public partial class Customer
 
     public int? ModifiedBy { get; set; }
 
+    public virtual User? CreatedByNavigation { get; set; }
+
     public virtual ICollection<CustomerAddress> CustomerAddresses { get; set; } = new List<CustomerAddress>();
+
+    public virtual User? ModifiedByNavigation { get; set; }
 }

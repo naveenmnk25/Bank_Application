@@ -1,0 +1,9 @@
+.bg-money {
+    background: url('../src/assets/image/bank1.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 300px; /* Full height */
+    width: 300px;
+    position: relative; /* To allow child elements */
+    overflow: hidden;
+  }
+  

@@ -22,27 +22,41 @@ namespace WebApi.Services
             }
         }
 
-        public string CreateToken(Customer customer)
+        public string CreateToken(Customer customer, User user, Role role)
         {
-            List<Claim> Claims = new List<Claim>()
+            // Ensure the JWT key is configured
+            var jwtKey = _configuration.GetSection("Jwt:Key")?.Value;
+            if (string.IsNullOrEmpty(jwtKey))
             {
-                new Claim(ClaimTypes.Name,customer.FirstName),
-                new Claim(ClaimTypes.Role,customer.Role==null?"user":customer.Role)
-            };
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt:Token").Value!));
+                throw new InvalidOperationException("JWT Key is not configured in appsettings.json.");
+            }
 
-            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            // Define claims
+            var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.Name, customer.FirstName),
+        new Claim(ClaimTypes.Email, customer.Email!),
+        new Claim(ClaimTypes.Role, role?.RoleName ?? "Customer"),
+        new Claim("UserId", user.Id.ToString()), // Custom claim for User ID
+        new Claim("CustomerId", customer.CustomerId.ToString()), // Custom claim for Customer ID
+    };
 
+            // Generate key and credentials
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(jwtKey));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature); // Changed to HmacSha256
+
+            // Create the token
             var token = new JwtSecurityToken(
-                claims: Claims,
-                signingCredentials: cred,
-                expires: DateTime.Now.AddHours(1)
-                );
+                  claims: claims,
+                  signingCredentials: credentials,
+                  expires: DateTime.Now.AddHours(1)
+                  );
 
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-            return jwt;
+            // Return the serialized token
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+
 
         public bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordsalt)
         {

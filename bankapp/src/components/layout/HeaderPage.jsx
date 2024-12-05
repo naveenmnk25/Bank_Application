@@ -1,34 +1,38 @@
 import { NavLink } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { PathConstants } from "../../routing/path-contants";
+import { useAuth } from "../../auth/auth";
 
 function HeaderPage() {
   const dispatch = useDispatch();
-
+  const auth = useAuth();
+  const [role, setRole] = useState(null);
   // Local loading state
 
   //--- State Data -------//
- // const companyList = useSelector((state) => state.company.companyList);
-  
+  // const companyList = useSelector((state) => state.company.companyList);
+
   //--- useEffect -------//
   useEffect(() => {
-    //dispatch(fetchCompany());
-  }, [dispatch]);
+    if (auth) {
+      var name = auth.getRole();
+      setRole(name);
+    }
+  }, [auth]);
 
   //----- Handle Data Changes Functions------//
-  
+  const Logout = (e) => {
+    auth.logout();
+  };
 
-  
   return (
     <>
       <section>
-        <nav
-          className="navbar navbar-expand-lg"
-        >
+        <nav className="navbar navbar-expand-lg">
           <div className="container-fluid">
             <a className="navbar-brand " href="#">
-              ABC BANK
+              ABC
             </a>
             <button
               className="navbar-toggler"
@@ -52,14 +56,28 @@ function HeaderPage() {
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink
-                    to={PathConstants.CUSTOMER}
-                    className="nav-link"
-                  >
+                  <NavLink to={PathConstants.CUSTOMER} className="nav-link">
                     <i className="icon-stack"></i> Customers
                   </NavLink>
                 </li>
+                <li className="nav-item">
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => Logout()}
+                  >
+                    Logout
+                  </button>
+                </li>
               </ul>
+              {role && (
+                <>
+                  <ul className="navbar-nav header-css1 text-end">
+                    <li>
+                      Welcome <b>{role}</b>
+                    </li>
+                  </ul>
+                </>
+              )}
             </div>
           </div>
         </nav>

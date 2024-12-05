@@ -1,9 +1,9 @@
-﻿namespace WebApi.DTO
+﻿using WebApi.Models;
+
+namespace WebApi.DTO
 {
     public class CustomerDto
     {
-        public int CustomerId { get; set; }
-
         public string FirstName { get; set; } = null!;
 
         public string LastName { get; set; } = null!;
@@ -17,13 +17,10 @@
         public string? PhoneNumber { get; set; }
         public string? Role { get; set; }
         public string? Password { get; set; }
-        public byte[]? PasswordHash { get; set; }
-
-        public byte[]? PasswordSalt { get; set; }
-
-        public DateTime AccountCreationDate { get; set; }
+        public DateTime? AccountCreationDate { get; set; }
 
         public bool IsActive { get; set; }
+        public CustomerAddressDto? CustomerAddress { get; set; }
 
     }
 }

@@ -20,9 +20,9 @@ namespace WebApi.Repository.Customers
                 throw;
             }
         }
-        public async Task<Customer> GetCustomerById(int id)
+        public async Task<Customer> GetCustomerById(string mail)
         {
-            return await _context.Customers.FirstOrDefaultAsync(c => c.CustomerId == id);
+            return await _context.Customers.FirstOrDefaultAsync(c => c.Email == mail);
         }
 
         public async Task<Customer> CreateCustomer(Customer customer)

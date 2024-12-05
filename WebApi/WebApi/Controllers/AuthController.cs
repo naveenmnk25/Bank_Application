@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WebApi.DTO;
-using WebApi.Models;
 using WebApi.Repository.Auth;
-using WebApi.Repository.Customers;
 
 namespace WebApi.Controllers
 {
@@ -18,17 +15,17 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Register(CustomerDto customer)
         {
             var user = await _authRepository.Register(customer);
-            if (user.CustomerId == 0) return Conflict("Email or Phone Number already exists!");
+            if (user == null) return Conflict(new {Message = "Email or Phone Number already exists!" });
 
             return Ok(new { Message = "Registration successful!", Customer = user });
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<LoginResponseDto>> Login(CustomerDto customer)
+        public async Task<ActionResult<LoginResponseDto>> Login(string Email, string Password)
         {
-            var loginResponse = await _authRepository.Login(customer.Email!,customer.Password!);
+            var loginResponse = await _authRepository.Login(Email!,Password!);
 
-            if (loginResponse.Customer!.CustomerId == 0) return Conflict("Wrong password!");
+            if (loginResponse == null) return Conflict(new { Message = "Wrong password!" });
 
             return Ok((new { Message = "Login successful!", User = loginResponse }));
         }

@@ -83,8 +83,13 @@ function Customer() {
         <h2 className="text-center mb-4">Customer Management</h2>
 
         {/* Add Customer Button */}
-        <button className="btn btn-primary mb-3" onClick={() => openModal()}
-            type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <button
+          className="btn btn-primary mb-3"
+          onClick={() => openModal()}
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+        >
           Add Customer
         </button>
 
@@ -106,7 +111,7 @@ function Customer() {
           <tbody>
             {customerList && customerList.length > 0 ? (
               customerList.map((customer, index) => (
-                <tr key={customer.customerID}>
+                <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{customer.firstName}</td>
                   <td>{customer.lastName}</td>
@@ -118,7 +123,9 @@ function Customer() {
                   <td>
                     <button
                       className="btn btn-primary btn-sm mr-2"
-                      type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                      type="button"
+                      data-bs-toggle="modal"
+                      data-bs-target="#staticBackdrop"
                       onClick={() => openModal(customer)}
                     >
                       Edit
@@ -143,107 +150,122 @@ function Customer() {
         </table>
 
         {/* Bootstrap Modal */}
-          <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">
-                    {isEditing ? "Edit Customer" : "Add Customer"}
-                  </h5>
-                </div>
-                <div className="modal-body">
-                  <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                      <label>First Name</label>
+        <div
+          className="modal fade"
+          id="staticBackdrop"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">
+                  {isEditing ? "Edit Customer" : "Add Customer"}
+                </h5>
+              </div>
+              <div className="modal-body">
+                <form onSubmit={handleSubmit}>
+                  <div className="form-group">
+                    <label>First Name</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Last Name</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Date of Birth</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      name="dateOfBirth"
+                      value={formData.dateOfBirth}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Gender</label>
+                    <select
+                      className="form-control"
+                      name="gender"
+                      value={formData.gender}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select Gender</option>
+                      <option value="M">Male</option>
+                      <option value="F">Female</option>
+                      <option value="O">Other</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label>Email</label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Phone Number</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="phoneNumber"
+                      value={formData.phoneNumber}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>
                       <input
-                        type="text"
-                        className="form-control"
-                        name="firstName"
-                        value={formData.firstName}
+                        type="checkbox"
+                        name="isActive"
+                        checked={formData.isActive}
                         onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Last Name</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Date of Birth</label>
-                      <input
-                        type="date"
-                        className="form-control"
-                        name="dateOfBirth"
-                        value={formData.dateOfBirth}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Gender</label>
-                      <select
-                        className="form-control"
-                        name="gender"
-                        value={formData.gender}
-                        onChange={handleChange}
-                      >
-                        <option value="">Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
-                    <div className="form-group">
-                      <label>Email</label>
-                      <input
-                        type="email"
-                        className="form-control"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Phone Number</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="phoneNumber"
-                        value={formData.phoneNumber}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>
-                        <input
-                          type="checkbox"
-                          name="isActive"
-                          checked={formData.isActive}
-                          onChange={handleChange}
-                        />{" "}
-                        Active
-                      </label>
-                    </div>
-                     <div className="text-end">
-                        <button type="button" class="btn btn-secondary me-2 mt-3" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" className="btn btn-primary mt-3" data-bs-dismiss="modal">
+                      />{" "}
+                      Active
+                    </label>
+                  </div>
+                  <div className="text-end">
+                    <button
+                      type="button"
+                      className="btn btn-secondary me-2 mt-3"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="submit"
+                      className="btn btn-primary mt-3"
+                      data-bs-dismiss="modal"
+                    >
                       {isEditing ? "Update Customer" : "Add Customer"}
                     </button>
-                     </div>
-                  </form>
-                </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
+        </div>
       </div>
     </>
   );

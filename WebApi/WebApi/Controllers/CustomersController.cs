@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
 using WebApi.Models;
 using WebApi.Repository.Customers;
@@ -7,6 +8,7 @@ namespace WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Customer")]
     public class CustomerController(ICustomersRepository customersRepository) : Controller
     {
 
@@ -21,10 +23,10 @@ namespace WebApi.Controllers
         }
 
         // Get Customer by ID
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetCustomer(int id)
+        [HttpGet("{mail}")]
+        public async Task<IActionResult> GetCustomer(string mail)
         {
-            var customer = await _customersRepository.GetCustomerById(id);
+            var customer = await _customersRepository.GetCustomerById(mail);
             if (customer == null)
             {
                 return NotFound();

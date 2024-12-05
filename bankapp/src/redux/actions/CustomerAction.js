@@ -9,6 +9,14 @@ export const fetchCustomer = createAsyncThunk(
   }
 );
 
+export const fetchCustomerByIdEmail = createAsyncThunk(
+  'customer/fetchCustomerByIdEmail',
+  async (mail) => {
+    const response = await baseapi.get('/Customer/'+mail);
+    return response.data;
+  }
+);
+
 export const addCustomer = createAsyncThunk(
   'customer/addcustomer',
   async (data) => {

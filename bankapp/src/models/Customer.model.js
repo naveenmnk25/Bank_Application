@@ -7,4 +7,5 @@ export const CustomerModel = {
     email: "",
     phoneNumber: "",
     isActive: true,
+    password:""
 };
