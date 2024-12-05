@@ -18,6 +18,10 @@ public partial class Customer
     public string? Email { get; set; }
 
     public string? PhoneNumber { get; set; }
+    public string? Role { get; set; }
+    public byte[]? PasswordHash { get; set; }
+
+    public byte[]? PasswordSalt { get; set; }
 
     public DateTime AccountCreationDate { get; set; }
 

@@ -5,19 +5,19 @@ End
 Go
 
 CREATE TABLE Customers (
-	CustomerID			INT	         IDENTITY(1,1)
-	,FirstName			NVARCHAR(50)           NOT NULL
-	,LastName			NVARCHAR(50)           NOT NULL
-	,DateOfBirth		DATE                   NOT NULL
-	,Gender				NVARCHAR(10)           NULL
-	,Email				NVARCHAR(100)          UNIQUE
-	,PhoneNumber		NVARCHAR(15)           UNIQUE
+	CustomerID			 INT	         IDENTITY(1,1)			
+	,FirstName			 NVARCHAR(50)           NOT NULL
+	,LastName			 NVARCHAR(50)           NOT NULL
+	,DateOfBirth		 DATE                   NOT NULL
+	,Gender				 NVARCHAR(10)           NULL
+	,Email				 NVARCHAR(100)          UNIQUE
+	,PhoneNumber		 NVARCHAR(15)           UNIQUE
 	,AccountCreationDate DATETIME              NOT NULL DEFAULT GETDATE()
-	,IsActive			BIT                    NOT NULL DEFAULT 1
-	,CreatedDate		DATETIME               NOT NULL DEFAULT GETDATE()
-	,CreatedBy			INT                    NULL
-	,ModifiedDate		DATETIME               NOT NULL DEFAULT GETDATE()
-	,ModifiedBy			INT                    NULL
+	,IsActive			 BIT                    NOT NULL DEFAULT 1
+	,CreatedDate		 DATETIME               NOT NULL DEFAULT GETDATE()
+	,CreatedBy			 INT                    NULL
+	,ModifiedDate		 DATETIME               NOT NULL DEFAULT GETDATE()
+	,ModifiedBy			 INT                    NULL
 );
 GO
 

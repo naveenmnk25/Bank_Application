@@ -9,5 +9,6 @@ namespace WebApi.Repository.Customers
         Task<Customer> CreateCustomer(Customer customer);
         Task<Customer> UpdateCustomer(Customer customer);
         Task<int> DeleteCustomer(int id);
+     
     }
 }

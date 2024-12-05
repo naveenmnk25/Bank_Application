@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using System.Xml;
 using WebApi.Models;
+using WebApi.Repository.Auth;
 using WebApi.Repository.Customers;
+using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var environment = builder.Environment;
@@ -23,6 +25,8 @@ builder.Services.AddDbContext<BankContext>(options =>
 
 
 builder.Services.AddScoped<ICustomersRepository, CustomersRepository>();
+builder.Services.AddScoped<AuthServices>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

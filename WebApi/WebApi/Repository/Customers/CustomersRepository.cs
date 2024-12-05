@@ -42,7 +42,7 @@ namespace WebApi.Repository.Customers
         public async Task<Customer> UpdateCustomer(Customer customer)
         {
             var existingCustomer = await _context.Customers.FindAsync(customer.CustomerId);
-            if (existingCustomer == null) return null;
+            if (existingCustomer == null) return new Customer();
 
             existingCustomer.FirstName = customer.FirstName;
             existingCustomer.LastName = customer.LastName;
