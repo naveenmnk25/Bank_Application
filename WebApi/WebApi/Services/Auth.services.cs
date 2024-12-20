@@ -30,13 +30,13 @@ namespace WebApi.Services
 
             // Define claims
             var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.Name, customer.FirstName),
-        new Claim(ClaimTypes.Email, customer.Email!),
-        new Claim(ClaimTypes.Role, role?.RoleName ?? "Customer"),
-        new Claim("UserId", user.Id.ToString()), // Custom claim for User ID
-        new Claim("CustomerId", customer.CustomerId.ToString()), // Custom claim for Customer ID
-    };
+            {
+                new Claim(ClaimTypes.Name, customer.FirstName),
+                new Claim(ClaimTypes.Email, customer.Email!),
+                new Claim(ClaimTypes.Role, role?.RoleName ?? "Customer"),
+                new Claim("UserId", user.Id.ToString()), // Custom claim for User ID
+                new Claim("CustomerId", customer.CustomerId.ToString()), // Custom claim for Customer ID
+            };
 
             // Generate key and credentials
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(jwtKey));

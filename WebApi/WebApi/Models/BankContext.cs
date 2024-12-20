@@ -20,6 +20,7 @@ public partial class BankContext : DbContext
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<AuditLog> AuditLogs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -114,8 +115,42 @@ public partial class BankContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_User_RoleId");
         });
+        modelBuilder.Entity<AuditLog>(entity =>
+        {
+            entity.ToTable("AuditLogs"); // Table name
 
-        OnModelCreatingPartial(modelBuilder);
+            entity.HasKey(e => e.Id); // Primary key
+
+            entity.Property(e => e.UserId)
+                .IsRequired(false) // Optional field
+                .HasMaxLength(50);
+
+            entity.Property(e => e.Action)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            entity.Property(e => e.Controller)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            entity.Property(e => e.Method)
+                .IsRequired()
+                .HasMaxLength(10); // e.g., GET, POST
+
+            entity.Property(e => e.RequestData)
+                .IsRequired(false) // Optional field
+                .HasColumnType("nvarchar(max)");
+
+            entity.Property(e => e.Timestamp)
+                .IsRequired()
+                .HasColumnType("datetime");
+
+            // Optional: Add any indexing to optimize queries
+            entity.HasIndex(e => e.Timestamp);
+        });
+    
+
+    OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

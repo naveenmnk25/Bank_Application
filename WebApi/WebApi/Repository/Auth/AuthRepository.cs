@@ -30,7 +30,7 @@ namespace WebApi.Repository.Auth
                 PhoneNumber = customer.PhoneNumber,
                 AccountCreationDate = DateTime.UtcNow,
                 DateOfBirth = customer.DateOfBirth,
-                Gender=customer.Gender
+                Gender = customer.Gender
             };
             await _context.Customers.AddAsync(newCustomer);
             await _context.SaveChangesAsync();
