@@ -21,6 +21,7 @@ public partial class BankContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<QueryResult> QueryResult { get; set; }
+    public virtual DbSet<AuditLog> AuditLogs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -115,12 +116,8 @@ public partial class BankContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_User_RoleId");
         });
-        modelBuilder.Entity<QueryResult>(entity =>
-        {
-            entity.HasNoKey();
-        });
 
-        OnModelCreatingPartial(modelBuilder);
+    OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

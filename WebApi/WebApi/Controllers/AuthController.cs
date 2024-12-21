@@ -14,7 +14,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Register(CustomerDto customer)
         {
             var user = await _authRepository.Register(customer);
-            if (user == null) return Conflict(new { StatusCode=409, Message = "Email or Phone Number already exists!" });
+            if (user == null) return Conflict(new { StatusCode = 409, Message = "Email or Phone Number already exists!" });
 
             return Ok(new { StatusCode = 201, Message = "Registration successful!", Customer = user });
         }

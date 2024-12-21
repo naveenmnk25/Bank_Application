@@ -4,10 +4,12 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using WebApi.Middleware;
 using WebApi.Models;
 using WebApi.Repository.Auth;
 using WebApi.Repository.Customers;
 using WebApi.Services;
+using WebApi.Services.AuditService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<ICustomersRepository, CustomersRepository>();
 builder.Services.AddScoped<AuthServices>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IAuditService, AuditService>();
 
 // Swagger Configuration
 builder.Services.AddEndpointsApiExplorer();
@@ -41,7 +44,7 @@ builder.Services.AddDbContext<BankContext>(options =>
 var allowedOrigins = builder.Configuration.GetSection("AllowedCorsOrigins").Get<string[]>();
 builder.Services.AddCors(options =>
     options.AddPolicy("AllowOrigin", build =>
-        build.WithOrigins(allowedOrigins)
+        build.WithOrigins(allowedOrigins!)
             .AllowAnyMethod()
             .AllowAnyHeader()));
 builder.Services.AddSwaggerGen();
@@ -56,7 +59,7 @@ builder.Services.AddAuthentication(options =>
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value)),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value!)),
         ValidateIssuer = false,
         ValidateAudience = false
     };
@@ -72,13 +75,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseCors("AllowOrigin");
+app.UseMiddleware<AuditMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
