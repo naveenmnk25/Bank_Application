@@ -11,7 +11,10 @@ namespace WebApi.Repository.Customers
         {
             try
             {
-                return await _context.Customers.ToListAsync();
+                var data = await _context.QueryResult.FromSqlRaw("Execute dbo.GetAllCustomers").ToListAsync();
+                List<Customer> customerList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Customer>>(data[0].JsonResult!)!;
+
+                return customerList;
             }
             catch (Exception)
             {
